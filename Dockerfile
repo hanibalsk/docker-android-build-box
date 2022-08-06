@@ -143,13 +143,15 @@ RUN . /etc/jdk.env && \
 RUN echo "platforms" && \
     . /etc/jdk.env && \
     yes | "$ANDROID_HOME"/tools/bin/sdkmanager \
+        "platforms;android-33" \
         "platforms;android-32" \
         "platforms;android-31" \
         "platforms;android-30" \
         "platforms;android-29" \
         "platforms;android-28" \
         "platforms;android-27" \
-        "platforms;android-26" > /dev/null
+        "platforms;android-28" \
+        "platforms;android-27" > /dev/null
 
 RUN echo "platform tools" && \
     . /etc/jdk.env && \
@@ -159,6 +161,8 @@ RUN echo "platform tools" && \
 RUN echo "build tools 26-30" && \
     . /etc/jdk.env && \
     yes | "$ANDROID_HOME"/tools/bin/sdkmanager \
+        "build-tools;33.0.0" \
+        "build-tools;32.0.0" \
         "build-tools;31.0.0" \
         "build-tools;30.0.0" "build-tools;30.0.2" "build-tools;30.0.3" \
         "build-tools;29.0.3" "build-tools;29.0.2" \
@@ -253,11 +257,11 @@ ENV BUILD_DATE=${BUILD_DATE} \
 WORKDIR /project
 
 # labels, see http://label-schema.org/
-LABEL maintainer="Ming Chen"
+LABEL maintainer="Martin Janci"
 LABEL org.label-schema.schema-version="1.0"
-LABEL org.label-schema.name="mingc/android-build-box"
+LABEL org.label-schema.name="mjanci/android-build-box"
 LABEL org.label-schema.version="${DOCKER_TAG}"
 LABEL org.label-schema.usage="/README.md"
-LABEL org.label-schema.docker.cmd="docker run --rm -v `pwd`:/project mingc/android-build-box bash -c 'cd /project; ./gradlew build'"
+LABEL org.label-schema.docker.cmd="docker run --rm -v `pwd`:/project mjanci/android-build-box bash -c 'cd /project; ./gradlew build'"
 LABEL org.label-schema.build-date="${BUILD_DATE}"
 LABEL org.label-schema.vcs-ref="${SOURCE_COMMIT}@${SOURCE_BRANCH}"
